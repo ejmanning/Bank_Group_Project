@@ -1,20 +1,20 @@
 package dmacc.beans;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
+//import java.util.Date;
+
+
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
+import javax.persistence.Table;
+import java.time.*;
 @Entity
 @Table(name="transactions")
 public class Transaction {
@@ -23,7 +23,7 @@ public class Transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionID;
 
-	private Date dateOfTransaction;
+	private LocalDate dateOfTransaction;
 	private double amount;
 	private long accountFrom;
 	private long accountTo;
@@ -41,7 +41,7 @@ public class Transaction {
 		super();
 		this.amount = amount;
 	}
-	public Transaction(Date dateOfTransaction, double amount, long accountFrom, long accountTo)
+	public Transaction(LocalDate dateOfTransaction, double amount, long accountFrom, long accountTo)
 	{
 		super();
 		this.dateOfTransaction = dateOfTransaction;
@@ -50,7 +50,7 @@ public class Transaction {
 	    this.accountTo = accountTo;
 	}
 
-	public Transaction(int transactionID, Date dateOfTransaction, double amount, long accountFrom, long accountTo)
+	public Transaction(int transactionID, LocalDate dateOfTransaction, double amount, long accountFrom, long accountTo)
 	{
 		super();
 		this.transactionID = transactionID;
@@ -69,11 +69,11 @@ public class Transaction {
 		this.transactionID = transactionID;
 	}
 
-  public Date getDateOfTransaction() {
+  public LocalDate getDateOfTransaction() {
     return dateOfTransaction;
   }
 
-  public void setDateOfTransaction(Date dateOfTransaction) {
+  public void setDateOfTransaction(LocalDate dateOfTransaction) {
     this.dateOfTransaction = dateOfTransaction;
   }
 

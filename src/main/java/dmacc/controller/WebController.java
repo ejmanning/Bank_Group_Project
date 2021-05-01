@@ -1,5 +1,6 @@
 package dmacc.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import dmacc.repository.UserRepo;
  */
 @Controller
 public class WebController {
-
+	
 	@Autowired
 	UserRepo userRepo;
 	@Autowired
@@ -36,7 +37,7 @@ public class WebController {
 	EmployeeRepo empRepo;
 	
 	
-	@GetMapping({ "/", "viewAllUsers" })
+	@GetMapping({"/viewAllUsers" })
 	public String viewAllUsers(Model model) {
 		if (userRepo.findAll().isEmpty()) {
 			return addNewUser(model);
@@ -216,6 +217,7 @@ public class WebController {
 	public String addTransaction(@PathVariable("AccountID") long accountID, @PathVariable("UserID") long userID, @ModelAttribute Transaction t, 
 			@RequestParam String action, Model model) {
 		Account account = acctRepo.findById(accountID).orElse(null);
+		t.setDateOfTransaction(LocalDate.now());
 		account.getTransactions().add(t);
 		User user = userRepo.findById(userID).orElse(null);
 		double balance = account.getBalance();
@@ -273,7 +275,9 @@ public class WebController {
 	}
 
 	if(firstName.equals(myEmployee.getFirstName())) {
-		return viewAllUsers(model);
+		String name = myEmployee.getFirstName() + " " + myEmployee.getLastName();
+		model.addAttribute("empName", name);
+		return "/employeeOptions";
 	}
 	 
 	return"/employeeLogin";
